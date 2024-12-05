@@ -1,0 +1,134 @@
+MIDTERM EXAM
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+
+using namespace std;
+
+class SeatReservation {
+public:
+    string name;
+    int seatNumber;
+
+    SeatReservation(string n, int s) : name(n), seatNumber(s) {}
+};
+
+void displayReservations(const vector<SeatReservation>& reservations) {
+    if (reservations.empty()) {
+        cout << "No reservations made yet." << endl;
+        return;
+    }
+    cout << "\nCurrent Reservations:" << endl;
+    for (const auto& res : reservations) {
+        cout << "Seat " << res.seatNumber << ": " << res.name << endl;
+    }
+}
+
+void displaySeatStatus(const vector<SeatReservation>& reservations, int totalSeats) {
+    cout << "\nSeat Status:" << endl;
+    for (int i = 1; i <= totalSeats; ++i) {
+        auto it = find_if(reservations.begin(), reservations.end(), [i](const SeatReservation& res) {
+            return res.seatNumber == i;
+        });
+        if (it != reservations.end()) {
+            cout << "Seat " << i << ": Occupied by " << it->name << endl;
+        } else {
+            cout << "Seat " << i << ": Available" << endl;
+        }
+    }
+}
+
+int main() {
+    vector<SeatReservation> reservations;
+    const int totalSeats = 100; 
+    int choice;
+
+    do {
+        cout << "\nCinema Seat Reservation System" << endl;
+        cout << "1. Create Reservation" << endl;
+        cout << "2. Read Reservations" << endl;
+        cout << "3. Update Reservation" << endl;
+        cout << "4. Delete Reservation" << endl;
+        cout << "5. Display Seat Status" << endl;
+        cout << "6. Exit" << endl;
+        cout << "Choose an option: ";
+        cin >> choice;
+        cin.ignore();
+
+        switch (choice) {
+            case 1: {
+                string name;
+                int seatNumber;
+                cout << "Enter your name: ";
+                getline(cin, name);
+                cout << "Enter seat number to reserve (1 to " << totalSeats << "): ";
+                cin >> seatNumber;
+                cin.ignore();
+
+                
+                if (find_if(reservations.begin(), reservations.end(), [seatNumber](const SeatReservation& res) {
+                    return res.seatNumber == seatNumber;
+                }) != reservations.end()) {
+                    cout << "Sorry, seat " << seatNumber << " is already occupied." << endl;
+                } else {
+                    reservations.emplace_back(name, seatNumber);
+                    cout << "Reservation created for " << name << " at seat " << seatNumber << "." << endl;
+                }
+                break;
+            }
+            case 2:
+                displayReservations(reservations);
+                break;
+            case 3: {
+                int seatNumber;
+                cout << "Enter seat number to update: ";
+                cin >> seatNumber;
+                cin.ignore();
+
+                auto it = find_if(reservations.begin(), reservations.end(), [seatNumber](const SeatReservation& res) {
+                    return res.seatNumber == seatNumber;
+                });
+
+                if (it != reservations.end()) {
+                    string newName;
+                    cout << "Enter new name for seat " << seatNumber << ": ";
+                    getline(cin, newName);
+                    it->name = newName;
+                    cout << "Reservation updated for seat " << seatNumber << "." << endl;
+                } else {
+                    cout << "No reservation found for seat " << seatNumber << "." << endl;
+                }
+                break;
+            }
+            case 4: {
+                int seatNumber;
+                cout << "Enter seat number to delete: ";
+                cin >> seatNumber;
+                cin.ignore();
+
+                auto it = remove_if(reservations.begin(), reservations.end(), [seatNumber](const SeatReservation& res) {
+                    return res.seatNumber == seatNumber;
+                });
+
+                if (it != reservations.end()) {
+                    reservations.erase(it, reservations.end());
+                    cout << "Reservation for seat " << seatNumber << " deleted." << endl;
+                } else {
+                    cout << "No reservation found for seat " << seatNumber << "." << endl;
+                }
+                break;
+            }
+            case 5:
+                displaySeatStatus(reservations, totalSeats);
+                break;
+            case 6:
+                cout << "Exiting the system." << endl;
+                break;
+            default:
+                cout << "Invalid option. Please try again." << endl;
+        }
+    } while (choice != 6);
+
+    return 0;
+}

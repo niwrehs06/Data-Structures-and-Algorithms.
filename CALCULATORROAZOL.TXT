@@ -1,0 +1,38 @@
+CALCULATOR
+#include <iostream>
+//di ko po ginamitan ng using name std kaya po may :: kase kung wala po di po gagana
+int main() {
+    float a, b;
+    char sign;
+
+    std::cout << "First Number: ";
+    std::cin >> a;
+
+    std::cout << "(+, -, *, /): ";
+    std::cin >> sign;
+
+    std::cout << "Second number: ";
+    std::cin >> b;
+
+    switch (sign) {
+        case '+': 
+            std::cout << a << "+" << b << "=" << a + b << std::endl;
+            break;
+        case '-': 
+            std::cout <<  a << "-" << b << "=" << a - b << std::endl;
+            break;
+        case '*': 
+            std::cout <<  a << "*" << b << "="  << a * b << std::endl;
+            break;
+        case '/': 
+            if(b != 0)
+                std::cout <<  a << "/" << b << "=" << a / b << std::endl;
+            else
+                std::cout << "Cannot divide by zero" << std::endl;
+            break;
+        default: 
+            std::cout << "Invalid operator" << std::endl;
+    }
+
+    return 0;
+}

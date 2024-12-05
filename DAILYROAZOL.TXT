@@ -1,0 +1,55 @@
+PSEUDOCODE DAILY ROUTINE
+
+1, SINGING
+2.  KEY STEPS INVOLVED:
+ a. WARM UP
+ b. Select a song to practice
+ c. Practice the song
+ d. Repeat or Finish
+
+
+3. PSEUDOCODE:
+
+
+START SingingPractice
+
+  // Step 1: Warm-up
+  FUNCTION WarmUp()
+    PRINT "Start vocal warm-up exercises."
+    // Perform the exercises
+    FOR each exercise IN warm_up_exercises
+      EXECUTE exercise
+    END FOR
+    PRINT "Warm-up completed."
+  END FUNCTION
+
+  // Step 2: Select a Song ti practice
+  FUNCTION SelectSong()
+    PRINT "Choose a song to practice."
+    song = INPUT("Enter a song: ")
+    RETURN song
+  END FUNCTION
+
+  // Step 3: Practice
+  FUNCTION PracticeSong(song)
+    PRINT "Practicing song: " + song
+    // Sing the song u selected
+    EXECUTE Sing(song)
+    PRINT "Practice completed."
+  END FUNCTION
+
+  // Step 4: Repeat or Finish
+  FUNCTION MainRoutine() // This Function repeats the routine depends if u decide to continue or end it
+    WarmUp()
+    song = SelectSong()
+    PracticeSong(song)
+
+    repeat = INPUT("Do you want to practice another song? (yes or no): ")
+    IF repeat == "yes" THEN
+      MainRoutine() // This Function repeats the routine depends if u decide to continue or end it
+    ELSE
+      PRINT "Practice session finished. Very Very Good Job Love U!"
+    END IF
+  END FUNCTION
+
+END SingingPractice
